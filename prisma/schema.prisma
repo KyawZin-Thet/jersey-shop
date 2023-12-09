@@ -1,0 +1,132 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id       Int    @id @default(autoincrement())
+  name     String
+  street   String
+  township String
+  city     String
+  users    User[]
+  jerseys Jerseys[]
+  isArchived Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model NationalTeams {
+  id                  Int                   @id @default(autoincrement())
+  name                String
+  assetUrl            String?
+  nationalJerseyTypes NationalJerseyTypes[]
+  isArchived          Boolean               @default(false)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  Order               Order[]
+}
+
+model ClubTeams {
+  id              Int               @id @default(autoincrement())
+  name            String
+  assetUrl        String?
+  clubJerseyTypes ClubJerseyTypes[]
+  isArchived      Boolean           @default(false)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  Order Order[]
+}
+
+model JerseyTypes {
+  id                  Int                   @id @default(autoincrement())
+  name                String
+  assetUrl            String?
+  isArchived          Boolean               @default(false)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  ClubJerseyTypes     ClubJerseyTypes[]
+  NationalJerseyTypes NationalJerseyTypes[]
+}
+
+model ClubJerseyTypes {
+  id            Int         @id @default(autoincrement())
+  clubId        Int
+  club          ClubTeams   @relation(fields: [clubId], references: [id])
+  jerseyTypesId Int
+  jerseyTypes   JerseyTypes @relation(fields: [jerseyTypesId], references: [id])
+  isArchived    Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model NationalJerseyTypes {
+  id            Int           @id @default(autoincrement())
+  NationalId    Int
+  National      NationalTeams @relation(fields: [NationalId], references: [id])
+  jerseyTypesId Int
+  jerseyTypes   JerseyTypes   @relation(fields: [jerseyTypesId], references: [id])
+  isArchived    Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Jerseys {
+  id            Int           @id @default(autoincrement())
+  name String 
+  
+  companyId Int 
+  company Company  @relation(fields: [companyId], references: [id])
+}
+
+model Addons {
+  id           Int      @id @default(autoincrement())
+  gender       String?
+  kits         String?
+  number       Int?
+  ShirtOrShort String?
+  isArchived   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  Order        Order[]
+}
+
+model Order {
+  id              Int            @id @default(autoincrement())
+  clubTeamsId     Int?
+  nationalTeamsId Int?
+  addonId         Int
+  quantity        Int
+  orderSeq        String
+  itemId          String
+  status          ORDERSTATUS
+  totalPrice      Int
+  isArchived      Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  addon           Addons?        @relation(fields: [addonId], references: [id])
+  clubTeams       ClubTeams?     @relation(fields: [clubTeamsId], references: [id])
+  nationalTeams   NationalTeams? @relation(fields: [nationalTeamsId], references: [id])
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  email     String
+  name      String?
+  companyId Int
+  company   Company @relation(fields: [companyId], references: [id])
+}
+
+enum ORDERSTATUS {
+  PENDING
+  INPROCESS
+  COMPLETE
+}
