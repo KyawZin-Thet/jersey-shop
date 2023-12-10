@@ -8,7 +8,6 @@ export default function Layout({ children }: Props) {
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <TopBar />
-
       {children}
     </Box>
   );

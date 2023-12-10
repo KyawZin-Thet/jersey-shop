@@ -35,11 +35,11 @@ export default function TopBar() {
         }}
       >
         <Image
-          src={"/greenSnake.png"}
+          src={"/footballLogo.jpg"}
           style={{ borderRadius: "50%" }}
           alt="logo"
-          width={55}
-          height={55}
+          width={62}
+          height={62}
         />
 
         {false ? (
@@ -53,7 +53,7 @@ export default function TopBar() {
               bgcolor: "info.main",
               width: "500px",
               input: { color: "secondary.main" },
-              mb: 1,
+              my: 1,
               ml: 4,
             }}
             placeholder="Search Team name.."
