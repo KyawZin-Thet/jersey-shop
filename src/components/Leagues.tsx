@@ -20,7 +20,7 @@ export default function League() {
         <Link
           style={{ textDecoration: "none" }}
           key={item.id}
-          href={`/teams/${item.id}`}
+          href={`order/teams/${item.id}`}
         >
           <Card elevation={4} sx={{ minWidth: 200, m: 4 }}>
             <CardActionArea>
@@ -44,7 +44,7 @@ export default function League() {
   );
 }
 
-const leaguesArr: LeaguesType[] = [
+export const leaguesArr: LeaguesType[] = [
   {
     id: 1,
     name: "Premier League",
