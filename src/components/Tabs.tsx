@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useState } from "react";
+import Home from "./Home";
 import International from "./International";
 import Leagues from "./Leagues";
 
@@ -72,7 +73,7 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Home
+        <Home />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <Leagues />

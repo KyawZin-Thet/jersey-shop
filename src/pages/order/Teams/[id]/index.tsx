@@ -52,13 +52,28 @@ export default function TeamsPage() {
 }
 
 const teams: Teams[] = [
-  { id: 1, name: "Arsenal", assetUrl: "", leagueId: 1 },
-  { id: 2, name: "Liverpool", assetUrl: "", leagueId: 1 },
-  { id: 3, name: "Manchester United", assetUrl: "", leagueId: 1 },
-  { id: 4, name: "Manchester City", assetUrl: "", leagueId: 1 },
-  { id: 5, name: "Chelsea", assetUrl: "", leagueId: 1 },
-  { id: 6, name: "Bercelona", assetUrl: "", leagueId: 2 },
-  { id: 7, name: "Real Madrid", assetUrl: "", leagueId: 2 },
-  { id: 8, name: "Bayern Munich", assetUrl: "", leagueId: 3 },
-  { id: 9, name: "PSG", assetUrl: "", leagueId: 4 },
+  { id: 1, name: "Arsenal", assetUrl: "/Arsenal_FC.svg.png", leagueId: 1 },
+  { id: 2, name: "Liverpool", assetUrl: "/Arsenal_FC.svg.png", leagueId: 1 },
+  {
+    id: 3,
+    name: "Manchester United",
+    assetUrl: "/Arsenal_FC.svg.png",
+    leagueId: 1,
+  },
+  {
+    id: 4,
+    name: "Manchester City",
+    assetUrl: "/Arsenal_FC.svg.png",
+    leagueId: 1,
+  },
+  { id: 5, name: "Chelsea", assetUrl: "/Arsenal_FC.svg.png", leagueId: 1 },
+  { id: 6, name: "Bercelona", assetUrl: "/Arsenal_FC.svg.png", leagueId: 2 },
+  { id: 7, name: "Real Madrid", assetUrl: "/Arsenal_FC.svg.png", leagueId: 2 },
+  {
+    id: 8,
+    name: "Bayern Munich",
+    assetUrl: "/Arsenal_FC.svg.png",
+    leagueId: 3,
+  },
+  { id: 9, name: "PSG", assetUrl: "/Arsenal_FC.svg.png", leagueId: 4 },
 ];

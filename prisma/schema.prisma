@@ -11,110 +11,98 @@ datasource db {
 }
 
 model Company {
-  id       Int    @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
+  name       String
+  street     String
+  township   String
+  city       String
+  products   Products[]
+  users      User[]
+  isArchived Boolean    @default(false)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model Leagues {
+  id         Int         @id @default(autoincrement())
+  name       String
+  assetUrl   String?
+  isArchived Boolean     @default(false)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  clubTeams  ClubTeams[]
+}
+
+model InternationalTeams {
+  id       Int     @id @default(autoincrement())
   name     String
-  street   String
-  township String
-  city     String
-  users    User[]
-  jerseys Jerseys[]
+  assetUrl String?
+
   isArchived Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
 
-model NationalTeams {
-  id                  Int                   @id @default(autoincrement())
-  name                String
-  assetUrl            String?
-  nationalJerseyTypes NationalJerseyTypes[]
-  isArchived          Boolean               @default(false)
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
-  Order               Order[]
-}
-
 model ClubTeams {
-  id              Int               @id @default(autoincrement())
-  name            String
-  assetUrl        String?
-  clubJerseyTypes ClubJerseyTypes[]
-  isArchived      Boolean           @default(false)
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
+  id       Int     @id @default(autoincrement())
+  name     String
+  assetUrl String?
+  leagueId Int
+  leagues  Leagues @relation(fields: [leagueId], references: [id])
 
-  Order Order[]
+  isArchived Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
-model JerseyTypes {
-  id                  Int                   @id @default(autoincrement())
-  name                String
-  assetUrl            String?
-  isArchived          Boolean               @default(false)
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
-  ClubJerseyTypes     ClubJerseyTypes[]
-  NationalJerseyTypes NationalJerseyTypes[]
+model ProductTypes {
+  id         Int      @id @default(autoincrement())
+  name       String
+  assetUrl   String?
+  isArchived Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
-model ClubJerseyTypes {
-  id            Int         @id @default(autoincrement())
-  clubId        Int
-  club          ClubTeams   @relation(fields: [clubId], references: [id])
-  jerseyTypesId Int
-  jerseyTypes   JerseyTypes @relation(fields: [jerseyTypesId], references: [id])
-  isArchived    Boolean     @default(false)
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-}
-
-model NationalJerseyTypes {
-  id            Int           @id @default(autoincrement())
-  NationalId    Int
-  National      NationalTeams @relation(fields: [NationalId], references: [id])
-  jerseyTypesId Int
-  jerseyTypes   JerseyTypes   @relation(fields: [jerseyTypesId], references: [id])
-  isArchived    Boolean       @default(false)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-}
-
-model Jerseys {
-  id            Int           @id @default(autoincrement())
-  name String 
-  
-  companyId Int 
-  company Company  @relation(fields: [companyId], references: [id])
+model Products {
+  id            Int      @id @default(autoincrement())
+  name          String
+  assetUrl      String
+  isBestSeller  Boolean
+  teamId        Int
+  companyId     Int
+  company       Company  @relation(fields: [companyId], references: [id])
+  productTypeId Int
+  addons        Addons[]
 }
 
 model Addons {
-  id           Int      @id @default(autoincrement())
-  gender       String?
-  kits         String?
-  number       Int?
-  ShirtOrShort String?
-  isArchived   Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  Order        Order[]
+  id         Int      @id @default(autoincrement())
+  kits       String?
+  number     Int?
+  type       String?
+  productId  Int
+  products   Products @relation(fields: [productId], references: [id])
+  isArchived Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  Order      Order[]
 }
 
 model Order {
-  id              Int            @id @default(autoincrement())
-  clubTeamsId     Int?
-  nationalTeamsId Int?
-  addonId         Int
-  quantity        Int
-  orderSeq        String
-  itemId          String
-  status          ORDERSTATUS
-  totalPrice      Int
-  isArchived      Boolean        @default(false)
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  addon           Addons?        @relation(fields: [addonId], references: [id])
-  clubTeams       ClubTeams?     @relation(fields: [clubTeamsId], references: [id])
-  nationalTeams   NationalTeams? @relation(fields: [nationalTeamsId], references: [id])
+  id          Int         @id @default(autoincrement())
+  address     String
+  phoneNumber String
+  addonId     Int
+  quantity    Int
+  orderSeq    String
+  itemId      String
+  status      ORDERSTATUS
+  totalPrice  Int
+  isArchived  Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  addon       Addons?     @relation(fields: [addonId], references: [id])
 }
 
 model User {
